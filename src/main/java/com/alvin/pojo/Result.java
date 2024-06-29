@@ -2,6 +2,7 @@ package com.alvin.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * packageName com.alvin.pojo
@@ -17,7 +18,7 @@ import lombok.Data;
 public class Result<T> {
 	private Integer code;
 	private String message;
-	private T date;
+	private final T date;
 
 	//快速返回操作成功响应结果(带响应数据)
 	public static <T> Result<T> success(T data) {
