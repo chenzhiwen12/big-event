@@ -1,6 +1,12 @@
 package com.alvin.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
@@ -14,11 +20,18 @@ import java.time.LocalDateTime;
  * @description TODO
  */
 @Data
+@NoArgsConstructor
 public class User {
+	@NonNull
 	private Integer id;
 	private String username;
+	@JsonIgnore
 	private String password;
+	@NotEmpty
+	@Pattern(regexp = "^\\S{1,10}$")
 	private String nickname;
+	@NotEmpty
+	@Email
 	private String email;
 	private String userPic;//用户头像地址
 	private LocalDateTime createTime;

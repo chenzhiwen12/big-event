@@ -4,8 +4,12 @@ import com.alvin.mapper.UserMapper;
 import com.alvin.pojo.User;
 import com.alvin.service.UserService;
 import com.alvin.utils.Md5Util;
+import com.alvin.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * packageName com.alvin.service.impl
@@ -30,5 +34,25 @@ public class UserServiceImpl implements UserService {
 	public void register(final String username, final String password) {
 		final String md5String = Md5Util.getMD5String(password);
 		userMapper.add(username, md5String);
+	}
+
+	@Override
+	public void update(User user) {
+		user.setUpdateTime(LocalDateTime.now());
+		userMapper.update(user);
+	}
+
+	@Override
+	public void updateAvatar(String userPic) {
+		Map<String,Object> map = ThreadLocalUtil.get();
+		Integer id = (Integer) map.get("id");
+		userMapper.updateAvatar(userPic,id);
+	}
+
+	@Override
+	public void updatePwd(String updatePwd) {
+		Map<String,Object> map = ThreadLocalUtil.get();
+		Integer id = (Integer) map.get("id");
+		userMapper.updatePwd(id,Md5Util.getMD5String(updatePwd));
 	}
 }
