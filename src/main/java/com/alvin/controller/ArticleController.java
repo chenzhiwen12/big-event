@@ -1,6 +1,7 @@
 package com.alvin.controller;
 
 import com.alvin.pojo.Article;
+import com.alvin.pojo.PageBean;
 import com.alvin.pojo.Result;
 import com.alvin.service.ArticleService;
 import com.alvin.utils.JwtUtil;
@@ -30,6 +31,17 @@ public class ArticleController {
 	public Result add(@RequestBody @Validated Article article) {
 		articleService.add(article);
 		return Result.success();
+	}
+
+	@GetMapping
+	public Result<PageBean<Article>> list(
+			Integer pageNum,
+			Integer pageSize,
+			@RequestParam(required = false) Integer categoryId,
+			@RequestParam(required = false) String state
+	) {
+		PageBean<Article> pb = articleService.list(pageNum, pageSize, categoryId, state);
+		return Result.success(pb);
 	}
 
 	/*	@GetMapping("/list")
