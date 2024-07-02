@@ -47,4 +47,13 @@ public class CategoryController {
 		categoryService.update(category);
 		return Result.success();
 	}
+	@DeleteMapping
+	public Result delete(@RequestParam Integer id){
+		Category category=categoryService.findById(id);
+		if(category==null){
+			return Result.error("输入id不正确");
+		}
+		categoryService.delete(id);
+		return Result.success(category);
+	}
 }
